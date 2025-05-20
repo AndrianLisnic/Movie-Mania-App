@@ -27,10 +27,6 @@ const Home = () => {
         fetch(trendingUrl).then((response) => response.json()),
       ]);
 
-      //   const res = await fetch(
-      //     "https://api.themoviedb.org/3/movie/now_playing?api_key=1e3d2ab8028e529fc6e3753ff43c9069&language=en-US"
-      //   );
-      //   const data = await res.json();
       dispatch(homeActions.populatePlayingNowList(resPlayingNowData.results));
       dispatch(homeActions.populateTrendongList(resTrendingData.results));
 
