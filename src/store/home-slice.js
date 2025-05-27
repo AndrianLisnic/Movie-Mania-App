@@ -5,6 +5,7 @@ const homeSlice = createSlice({
   initialState: {
     playingNowList: [],
     trendingList: [],
+    favoritesList: [],
   },
   reducers: {
     populatePlayingNowList(state, action) {
@@ -13,6 +14,10 @@ const homeSlice = createSlice({
     populateTrendongList(state, action) {
       state.trendingList = action.payload;
     },
+    addToFavorites(state, action) {
+      console.log(action.payload);
+      state.favoritesList.push(action.payload);
+    }
   },
 });
 
