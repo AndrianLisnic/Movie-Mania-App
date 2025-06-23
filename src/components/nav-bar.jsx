@@ -3,11 +3,16 @@ import { Box, Typography, InputAdornment } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import SearchIcon from "@mui/icons-material/Search";
 import Input from "@mui/material/Input";
+import Badge from "@mui/material/Badge";
 import { FavoriteBorderOutlined as Favorite } from "@mui/icons-material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [inputNameValue, setInputNameValue] = useState("");
+
+  const watchList = useSelector((state) => state.home.watchList);
 
   const handleNameSearch = (event) => {
     setInputNameValue(event.target.value);
@@ -35,31 +40,33 @@ const NavBar = () => {
         backgroundColor: "black",
       }}
     >
-      <Box
-        component="img"
-        src={appLogo}
-        alt="MovieMania Logo"
-        sx={{
-          width: {
-            xs: 100,
-            sm: 150,
-            md: 200,
-            lg: 250,
-          },
-          height: "auto",
-          p: {
-            xs: "8px",
-            sm: "12px",
-            md: "12px",
-            lg: "12px",
-          },
-          transition: "all 0.3s ease",
-          "&:hover": {
-            filter: "drop-shadow(0 0 2em #646cffaa)",
-          },
-          cursor: "pointer",
-        }}
-      />
+      <Link to={"/"}>
+        <Box
+          component="img"
+          src={appLogo}
+          alt="MovieMania Logo"
+          sx={{
+            width: {
+              xs: 100,
+              sm: 150,
+              md: 200,
+              lg: 250,
+            },
+            height: "auto",
+            p: {
+              xs: "8px",
+              sm: "12px",
+              md: "12px",
+              lg: "12px",
+            },
+            transition: "all 0.3s ease",
+            "&:hover": {
+              filter: "drop-shadow(0 0 2em #646cffaa)",
+            },
+            cursor: "pointer",
+          }}
+        />
+      </Link>
       <Box sx={{ display: "flex", alignItems: "end" }}>
         <Box
           component="form"
@@ -112,13 +119,24 @@ const NavBar = () => {
             cursor: "pointer",
           }}
         >
-          <Favorite sx={{ color: "#D86D2E" }} />
-          <Typography
-            sx={{ color: "white", fontSize: "18px", textWrap: "nowrap" }}
-            textTransform={"none"}
+          <Badge
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            badgeContent={watchList.length}
+            color="primary"
           >
-            Watch list
-          </Typography>
+            <Favorite sx={{ color: "#D86D2E" }} />
+          </Badge>
+          <Link to={"/watch-list"} style={{ textDecoration: "none" }}>
+            <Typography
+              sx={{ color: "white", fontSize: "18px", textWrap: "nowrap" }}
+              textTransform={"none"}
+            >
+              Watch list
+            </Typography>
+          </Link>
         </Box>
       </Box>
     </Box>

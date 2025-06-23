@@ -7,7 +7,8 @@ import { homeActions } from "../store/home-slice";
 const MovieSection = ({ sectionName, itemsList }) => {
   const [playingNowCount, setPlayingNowCount] = useState(10);
 
-  const favoritesList = useSelector((state) => state.home.favoritesList);
+  const watchList = useSelector((state) => state.home.watchList);
+  console.log(watchList.map((item) => item.id));
 
   const dispatch = useDispatch();
 
@@ -15,8 +16,8 @@ const MovieSection = ({ sectionName, itemsList }) => {
     setPlayingNowCount(playingNowCount === 10 ? 20 : 10);
   };
 
-  const addItemToFavorites = (item) => {
-    dispatch(homeActions.addToFavorites(item));
+  const addOrRemoveWatchItem = (item) => {
+    dispatch(homeActions.addOrRemoveWatchItem(item));
   };
 
   return (
@@ -115,10 +116,30 @@ const MovieSection = ({ sectionName, itemsList }) => {
                     <Box sx={{ color: "#D86D2E" }}>{item.release_date}</Box>
                     <Box
                       sx={{ cursor: "pointer" }}
-                      onClick={() => addItemToFavorites(item)}
+                      onClick={() => addOrRemoveWatchItem(item)}
                     >
-                      <FavoriteBorderOutlined sx={{ color: "#D86D2E" }} />
-                      <Favorite sx={{ color: "#D86D2E" }} />
+                      {watchList &&
+                      watchList.map((item) => item.id).includes(item.id) ? (
+                        <Favorite
+                          sx={{
+                            color: "#D86D2E",
+                            transition: "all 0.3s",
+                            "&:active": {
+                              transform: "scale(1.7)",
+                            },
+                          }}
+                        />
+                      ) : (
+                        <FavoriteBorderOutlined
+                          sx={{
+                            color: "#D86D2E",
+                            transition: "all 0.3s",
+                            "&:active": {
+                              transform: "scale(1.7)",
+                            },
+                          }}
+                        />
+                      )}
                     </Box>
                   </Box>
                 </Box>
